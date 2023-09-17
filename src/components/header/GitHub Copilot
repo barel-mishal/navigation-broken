@@ -1,0 +1,12 @@
+Synthesizing 1/10 solutions
+
+=======
+Suggestion 1
+
+      <div class={'relative text-sky-800 text-xl'}>
+        <img
+          class={'h-10 w-10 rounded-full'}
+          src={auth.user.value.image}
+          alt=""
+          onClick$={() => (openUserOptions.value = !openUserOptions.value)}
+        />
