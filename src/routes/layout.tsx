@@ -1,12 +1,12 @@
-import { component$, Slot } from "@builder.io/qwik";
+import { component$, createContextId, Fragment, Slot, useContext, useContextProvider } from "@builder.io/qwik";
 import { Form, routeLoader$ } from "@builder.io/qwik-city";
 import Header from "~/components/header/Header";
-import { useAuthSession, useAuthSignout } from "./plugin@auth";
+import { type AuthSession, useAuthSession, useAuthSignout } from "./plugin@auth";
 
 export default component$(() => {
   const authSignOut = useAuthSignout();
   const session = useAuthSession();
-  // useContextProvider(AuthSessionContext, session);
+  useContextProvider(AuthSessionContext, session);
   return (
     <div class={"min-h-screen bg-sky-200"}>
       {session.value?.expires && <Form  action={authSignOut} autoCorrect="">
@@ -31,10 +31,10 @@ export const useServerTimeLoader = routeLoader$(() => {
 });
 
 
-// export const AuthSessionContext = createContextId<AuthSession>("AuthSession");
-// export const AuthenticateComponent = component$(() => {
-//   const auth = useContext(AuthSessionContext);
-//   return <Fragment key={'AuthenticateComponent'}>
-//     {auth.value && <Slot />}
-//   </Fragment>
-// });
+export const AuthSessionContext = createContextId<AuthSession>("AuthSession");
+export const AuthenticateComponent = component$(() => {
+  const auth = useContext(AuthSessionContext);
+  return <Fragment key={'AuthenticateComponent'}>
+    {auth.value && <Slot />}
+  </Fragment>
+});
