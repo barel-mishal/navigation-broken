@@ -7,6 +7,8 @@
  * - https://qwik.builder.io/docs/deployments/node/
  *
  */
+import dotenv from "dotenv";
+dotenv.config()
 import {
   createQwikCity,
   type PlatformNode,
@@ -17,6 +19,7 @@ import render from "./entry.ssr";
 import express from "express";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
+import compression from "compression";
 
 declare global {
   interface QwikCityPlatform extends PlatformNode {}
@@ -49,7 +52,7 @@ const { router, notFound } = createQwikCity({
 const app = express();
 
 // Enable gzip compression
-// app.use(compression());
+app.use(compression());
 
 // Static asset handlers
 // https://expressjs.com/en/starter/static-files.html
